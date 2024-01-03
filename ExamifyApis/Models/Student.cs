@@ -7,7 +7,8 @@
         public string Grade { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public int? CourseId { get; set; }
-        public List<Course>? Courses { get; set; } = null;
+        public ICollection<Course>? Courses { get; set; } = null;
+        public List<Answer>? Answers { get; set; } = null;
+        public List<Grade>? Grades { get; set; }
     }
 }

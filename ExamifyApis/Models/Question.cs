@@ -10,5 +10,7 @@
         public string Option4 { get; set; } = "";
         public string CorrectAnswer { get; set; } = "";
         public double Weight { get; set; }
+        public int ExamId { get; set; }
+        public Exam Exam { get; set; }
     }
 }
