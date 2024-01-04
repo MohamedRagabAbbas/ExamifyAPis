@@ -9,6 +9,8 @@
         public Exam Exam { get; set; }
         public int StudentId { get; set; }
         public Student Student { get; set; }
-        public double TotalGrade { get; set; }
+        public decimal TotalGrade { get; set; }
+
+
     }
 }

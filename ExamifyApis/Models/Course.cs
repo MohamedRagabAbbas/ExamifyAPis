@@ -13,5 +13,8 @@
         public Teacher Teacher { get; set;}
 
         public List<Exam> Exams { get; set; }
+        public List<Grade> Grades { get; set; }
+        public List<Answer> Answers { get; set; }
+
     }
 }
