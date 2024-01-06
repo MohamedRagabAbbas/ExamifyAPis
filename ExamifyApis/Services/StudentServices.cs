@@ -279,8 +279,6 @@ namespace ExamifyApis.Services
             }
         }   
 
-        
-
         // Section 4
         // Operations on Student's Grades, Operations like Add, Remove, Update, Get, GetAll
         public async Task<ResponseClass<Student>> AddGradeToStudent(int Student_Id, int Grade_Id)
@@ -392,6 +390,66 @@ namespace ExamifyApis.Services
 
             }
         }
+
+        //section 5 
+        // oprations of student's asnwers on questions, operations like add, remove, update, get, getall
+        public async Task<ResponseClass<Student>> AddAnswerToStudent(int Student_Id, int Answer_Id)
+        {
+            Student? student = await _context.Students.FindAsync(Student_Id);
+            Answer? answer = await _context.Answers.FindAsync(Answer_Id);
+            if(student!=null && answer!=null)
+            {
+                // if it is the first time to add an answer to the student, even I did this when adding new student
+                if(student.Answers==null)
+                {
+                    student.Answers = new List<Answer>();
+                }
+                
+                student.Answers.Add(answer);
+                _context.SaveChanges();
+                ResponseClass<Student> response = new ResponseClass<Student>()
+                {
+                    Message = "Answer Added To Student Successfully",
+                    Status = true,
+                    Data = student
+                };
+                return response;
+            }
+            else
+            {
+                ResponseClass<Student> response = new ResponseClass<Student>()
+                {
+                    Message = student==null? "Unsuccessful Process, Student Is Not Found": "Unsuccessful Process, Answer Is Not Found"
+                };
+                return response;
+            }
+        }
+
+        public async Task<ResponseClass<Student>> RemoveAnswerFromStudent(int Student_Id, int Answer_Id)
+        {
+            Student? student = await _context.Students.FindAsync(Student_Id);
+            Answer? answer = await _context.Answers.FindAsync(Answer_Id);
+            if(student!=null && answer!=null)
+            {
+                student.Answers.Remove(answer);
+                _context.SaveChanges();
+                ResponseClass<Student> response = new ResponseClass<Student>()
+                {
+                    Message = "Answer Removed From Student Successfully",
+                    Status = true,
+                    Data = student
+                };
+                return response;
+            }
+            else
+            {
+                ResponseClass<Student> response = new ResponseClass<Student>()
+                {
+                    Message = student==null? "Unsuccessful Process, Student Is Not Found": "Unsuccessful Process, Answer Is Not Found"
+                };
+                return response;
+            }
+        }   
 
     }
 }
