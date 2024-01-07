@@ -23,7 +23,6 @@ namespace ExamifyApis.Services
         public async Task<ResponseClass<Student>> AddStudent(StudentInfo studentInfo)
         {
             Student student = new Student() { 
-                Id = studentInfo.Id,
                 Email = studentInfo.Email,
                 Grade = studentInfo.Grade,
                 Name = studentInfo.Name,
@@ -69,9 +68,9 @@ namespace ExamifyApis.Services
             }
         }
 
-        public async Task<ResponseClass<Student>> UpdateStudent(StudentInfo studentInfo)
+        public async Task<ResponseClass<Student>> UpdateStudent(int id, StudentInfo studentInfo)
         {
-            Student? student = await _context.Students.FindAsync(studentInfo.Id);
+            Student? student = await _context.Students.FindAsync(id);
             if(student!=null)
             {
                 student.Name = studentInfo.Name;

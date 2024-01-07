@@ -72,9 +72,9 @@ namespace ExamifyApis.Services
                 return response;
             }
         }
-        public async Task<ResponseClass<Teacher>> UpdateTeacher(TeacherInfo teacherInfo)
+        public async Task<ResponseClass<Teacher>> UpdateTeacher(int id, TeacherInfo teacherInfo)
         {
-            Teacher teacher = await _dbContext.Teachers.FindAsync(teacherInfo.Id);
+            Teacher teacher = await _dbContext.Teachers.FindAsync(id);
             if(teacher != null)
             {
                 teacher.Name = teacherInfo.Name;

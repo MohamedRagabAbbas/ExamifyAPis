@@ -1,4 +1,6 @@
-﻿using ExamifyApis.ModelServices;
+﻿using ExamifyApis.Models;
+using ExamifyApis.ModelServices;
+using ExamifyApis.Response;
 using ExamifyApis.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,53 +17,53 @@ namespace ExamifyApis.Controllers
         {
             _teacherServices = teacherServices;
         }
-        [HttpGet]
-        public IActionResult GetAllTeachers()
+        [HttpGet("GetAllTeachers")]
+        public async Task<ResponseClass<List<Teacher>>> GetAllTeachers()
         {
-            var response = _teacherServices.GetAllTeachers();
-            return Ok(response);
+            var response = await _teacherServices.GetAllTeachers();
+            return response;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetTeacher(int id)
+        [HttpGet("GetTeacher/{id}")]
+        public async Task<ResponseClass<Teacher>> GetTeacher(int id)
         {
-            var response = _teacherServices.GetTeacher(id);
-            return Ok(response);
+            var response = await _teacherServices.GetTeacher(id);
+            return response;
         }
 
-        [HttpPost]
-        public IActionResult AddTeacher([FromBody] TeacherInfo teacherInfo)
+        [HttpPost("AddTeacher")]
+        public async Task<ResponseClass<Teacher>> AddTeacher([FromBody] TeacherInfo teacherInfo)
         {
-            var response = _teacherServices.AddTeacher(teacherInfo);
-            return Ok(response);
+            var response = await _teacherServices.AddTeacher(teacherInfo);
+            return response;
         }
 
-        [HttpPut]
-        public IActionResult UpdateTeacher([FromBody] TeacherInfo teacherInfo)
+        [HttpPut("UpdateTeacher/{id}")]
+        public async Task<ResponseClass<Teacher>> UpdateTeacher(int id,[FromBody] TeacherInfo teacherInfo)
         {
-            var response = _teacherServices.UpdateTeacher(teacherInfo);
-            return Ok(response);
+            var response = await _teacherServices.UpdateTeacher(id,teacherInfo);
+            return response;
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult RemoveTeacherFromCourse(int id)
+        [HttpDelete("RemoveTeacherFromCourse/{id}")]
+        public async Task<ResponseClass<Teacher>> RemoveTeacherFromCourse(int id)
         {
-            var response = _teacherServices.RemoveTeacherFromCourse(id);
-            return Ok(response);
+            var response = await _teacherServices.RemoveTeacherFromCourse(id);
+            return response;
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult RemoveTeacher(int id)
+        [HttpDelete("RemoveTeacher/{id}")]
+        public async Task<ResponseClass<Teacher>> RemoveTeacher(int id)
         {
-            var response = _teacherServices.DeleteTeacher(id);
-            return Ok(response);
+            var response = await _teacherServices.DeleteTeacher(id);
+            return response;
         }
 
-        [HttpPost]
-        public IActionResult AddCourseToTeacher(int teacherId, int courseId)
+        [HttpPost("AddCourseToTeacher")]
+        public async  Task<ResponseClass<Teacher>> AddCourseToTeacher(int teacherId, int courseId)
         {
-            var response = _teacherServices.AddTeacherToCourse(teacherId, courseId);
-            return Ok(response);
+            var response = await _teacherServices.AddTeacherToCourse(teacherId, courseId);
+            return response;
         }
 
 

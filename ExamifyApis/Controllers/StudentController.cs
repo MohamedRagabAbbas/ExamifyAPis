@@ -1,4 +1,6 @@
-﻿using ExamifyApis.ModelServices;
+﻿using ExamifyApis.Models;
+using ExamifyApis.ModelServices;
+using ExamifyApis.Response;
 using ExamifyApis.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,86 +18,89 @@ namespace ExamifyApis.Controllers
         {
             _studentServices = studentServices;
         }
-        [HttpGet]
-        public IActionResult GetAllStudents()
+        [HttpGet("GetAllStudents")]
+        public async Task<ResponseClass<List<Student>>>  GetAllStudents()
         {
-            var response = _studentServices.GetAllStudents();
-            return Ok(response);
+            var response = await _studentServices.GetAllStudents();
+            return response;
         }
 
         // GET api/<StudentController>/5
-        [HttpGet("{id}")]
-        public IActionResult GetStudent(int id)
+        [HttpGet("GetStudent/{id}")]
+        public async Task<ResponseClass<Student>> GetStudent(int id)
         {
-            var response = _studentServices.GetStudent(id);
-            return Ok(response);
+            var response = await _studentServices.GetStudent(id);
+            return response;
         }
 
-        [HttpPost]
-        public IActionResult AddStudent([FromBody] StudentInfo studentInfo)
+        [HttpPost("AddStudent")]
+        public async Task<ResponseClass<Student>> AddStudent([FromBody] StudentInfo studentInfo)
         {
-            var response = _studentServices.AddStudent(studentInfo);
-            return Ok(response);
+            var response = await _studentServices.AddStudent(studentInfo);
+            return response;
         }
 
-        [HttpPut]
-        public IActionResult UpdateStudent([FromBody] StudentInfo studentInfo)
+        [HttpPut("UpdateStudent/{id}")]
+        public async Task<ResponseClass<Student>> UpdateStudent(int id,[FromBody] StudentInfo studentInfo)
         {
-            var response = _studentServices.UpdateStudent(studentInfo);
-            return Ok(response);
+            var response = await _studentServices.UpdateStudent(id, studentInfo);
+            return response;
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult RemoveStudent(int id)
+        [HttpDelete("RemoveStudent/{id}")]
+        public async Task<ResponseClass<Student>> RemoveStudent(int id)
         {
-            var response = _studentServices.RemoveStudent(id);
-            return Ok(response);
+            var response = await _studentServices.RemoveStudent(id);
+            return response;
         }
 
-        [HttpPost]
-        public IActionResult AddCourseToStudent(int studentId, int courseId)
+        [HttpPost("AddCourseToStudent")]
+        public async Task<ResponseClass<Student>> AddCourseToStudent(int studentId, int courseId)
         {
-            var response = _studentServices.AddCourseToStudent(studentId, courseId);
-            return Ok(response);
+            var response = await _studentServices.AddCourseToStudent(studentId, courseId);
+            return response;
         }
 
-        [HttpPut] IActionResult UpdateCourseForStudent(int studentId, int courseId)
+        [HttpPut("UpdateCourseForStudent")] 
+        public async Task<ResponseClass<Student>> UpdateCourseForStudent(int studentId, int courseId)
         {
-            var response = _studentServices.UpdateCourseForStudent(studentId, courseId);
-            return Ok(response);
+            var response = await _studentServices.UpdateCourseForStudent(studentId, courseId);
+            return response;
         }
 
-        [HttpDelete] IActionResult RemoveCourseFromStudent(int studentId, int courseId)
+        [HttpDelete("RemoveCourseFromStudent")] 
+        public async Task<ResponseClass<Student>> RemoveCourseFromStudent(int studentId, int courseId)
         {
-            var response = _studentServices.RemoveCourseFromStudent(studentId, courseId);
-            return Ok(response);
+            var response = await _studentServices.RemoveCourseFromStudent(studentId, courseId);
+            return response;
         }
 
-        [HttpPost] IActionResult AddAnswerToStudent(int studentId, int answerId)
+        [HttpPost("AddAnswerToStudent")] 
+        public async Task<ResponseClass<Student>> AddAnswerToStudent(int studentId, int answerId)
         {
-            var response = _studentServices.AddAnswerToStudent(studentId, answerId);
-            return Ok(response);
+            var response = await _studentServices.AddAnswerToStudent(studentId, answerId);
+            return response;
         }
 
-        [HttpDelete]
+        [HttpDelete("RemoveAnswerFromStudent")]
 
-        IActionResult RemoveAnswerFromStudent(int studentId, int answerId)
+        public async Task<ResponseClass<Student>> RemoveAnswerFromStudent(int studentId, int answerId)
         {
-            var response = _studentServices.RemoveAnswerFromStudent(studentId, answerId);
-            return Ok(response);
+            var response = await _studentServices.RemoveAnswerFromStudent(studentId, answerId);
+            return response;
         }
 
-        [HttpPost] IActionResult AddGradeToStudent(int studentId, int gradeId)
+        [HttpPost("AddGradeToStudent")] 
+        public async Task<ResponseClass<Student>> AddGradeToStudent(int studentId, int gradeId)
         {
-            var response = _studentServices.AddGradeToStudent(studentId, gradeId);
-            return Ok(response);
+            var response = await _studentServices.AddGradeToStudent(studentId, gradeId);
+            return response;
         }
-        [HttpDelete] IActionResult RemoveGradeFromStudent(int studentId, int gradeId)
+        [HttpDelete("RemoveGradeFromStudent")] 
+        public async Task<ResponseClass<Student>> RemoveGradeFromStudent(int studentId, int gradeId)
         {
-            var response = _studentServices.RemoveGradeFromStudent(studentId, gradeId);
-            return Ok(response);
+            var response = await _studentServices.RemoveGradeFromStudent(studentId, gradeId);
+            return response;
         }
-        
-
     }
 }

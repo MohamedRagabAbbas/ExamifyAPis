@@ -1,5 +1,8 @@
 using ExamifyApis.DB;
+using ExamifyApis.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +13,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
 builder.Services.AddDbContext<DBContextClass>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<StudentServices>();
+builder.Services.AddScoped<TeacherServices>();
+builder.Services.AddScoped<CourseServices>();
+builder.Services.AddScoped<ExamServices>();
+builder.Services.AddScoped<QuestionServices>();
+//builder.Services.AddScoped<AnswerServices>();
+//builder.Services.AddScoped<ExamResultServices>();
+//builder.Services.AddScoped<ExamQuestionServices>();
+//builder.Services.AddScoped<ExamAnswerServices>();
+//builder.Services.AddScoped<ExamQuestionAnswerServices>();
+
+// add services for my models
+
+
+// add swagger
+
+
 
 var app = builder.Build();
 

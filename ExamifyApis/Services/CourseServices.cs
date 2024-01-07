@@ -42,10 +42,10 @@ namespace ExamifyApis.Services
             {
                 Course course = new Course()
                 {
-                    Id = courseInfo.Id,
                     Code = courseInfo.Code,
                     Subject = courseInfo.Subject,
-                    Grade = courseInfo.Grade
+                    Grade = courseInfo.Grade,
+                    TeacherId = 0
                 };
                 await _context.Courses.AddAsync(course);
                 await _context.SaveChangesAsync();

@@ -1,4 +1,6 @@
-﻿using ExamifyApis.ModelServices;
+﻿using ExamifyApis.Models;
+using ExamifyApis.ModelServices;
+using ExamifyApis.Response;
 using ExamifyApis.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,39 +17,39 @@ namespace ExamifyApis.Controllers
         {
             _courseServices = courseServices;
         }
-        [HttpGet]
-        public IActionResult GetAllCourses()
+        [HttpGet("GetAllCourses")]
+        public async Task<ResponseClass<List<Course>>> GetAllCourses()
         {
-            var response = _courseServices.GetCourses();
-            return Ok(response);
+            var response = await _courseServices.GetCourses();
+            return response;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetCourse(int id)
+        [HttpGet("GetCourse/{id}")]
+        public async Task<ResponseClass<Course>> GetCourse(int id)
         {
-            var response = _courseServices.GetCourse(id);
-            return Ok(response);
+            var response = await _courseServices.GetCourse(id);
+            return response;
         }
 
-        [HttpPost]
-        public IActionResult AddCourse([FromBody] CourseInfo courseInfo)
+        [HttpPost("AddCourse")]
+        public async Task<ResponseClass<Course>> AddCourse([FromBody] CourseInfo courseInfo)
         {
-            var response = _courseServices.AddCourse(courseInfo);
-            return Ok(response);
+            var response = await _courseServices.AddCourse(courseInfo);
+            return response;
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateCourse(int id,[FromBody] CourseInfo courseInfo)
+        [HttpPut("UpdateCourse/{id}")]
+        public async Task<ResponseClass<Course>> UpdateCourse(int id,[FromBody] CourseInfo courseInfo)
         {
-            var response = _courseServices.UpdateCourse(id,courseInfo);
-            return Ok(response);
+            var response = await _courseServices.UpdateCourse(id,courseInfo);
+            return response;
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult RemoveCourse(int id)
+        [HttpDelete("RemoveCourse/{id}")]
+        public async Task<ResponseClass<Course>> RemoveCourse(int id)
         {
-            var response = _courseServices.DeleteCourse(id);
-            return Ok(response);
+            var response = await _courseServices.DeleteCourse(id);
+            return response;
         }
 
     }

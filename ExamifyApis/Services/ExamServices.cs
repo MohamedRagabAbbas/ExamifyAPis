@@ -2,6 +2,7 @@
 using ExamifyApis.Models;
 using ExamifyApis.ModelServices;
 using ExamifyApis.Response;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExamifyApis.Services
 {
@@ -44,10 +45,8 @@ namespace ExamifyApis.Services
             {
                 Exam exam = new Exam()
                 {
-                    Id = examInfo.Id,
                     Name = examInfo.Name,
                     Description = examInfo.Description,
-                    CourseId = examInfo.CourseId
                 };
                 await _dbContext.Exams.AddAsync(exam);
                 await _dbContext.SaveChangesAsync();
@@ -99,7 +98,6 @@ namespace ExamifyApis.Services
             {
                 exam.Name = examInfo.Name;
                 exam.Description = examInfo.Description;
-                exam.CourseId = examInfo.CourseId;
                 await _dbContext.SaveChangesAsync();
                 ResponseClass<Exam> response = new ResponseClass<Exam>()
                 {
