@@ -285,6 +285,34 @@ namespace ExamifyApis.Services
 
         }
 
+        // login
+
+        public async Task<ResponseClass<Teacher>> Login(string email, string password)
+        {
+            Teacher teacher = await _dbContext.Teachers.FirstOrDefaultAsync(t => t.Email == email && t.Password == password);
+            if(teacher != null)
+            {
+                ResponseClass<Teacher> response = new ResponseClass<Teacher>()
+                {
+                    Data = teacher,
+                    Message = "Teacher is logged in successfully",
+                    Status = true
+                };
+                return response;
+            }
+            else
+            {
+                ResponseClass<Teacher> response = new ResponseClass<Teacher>()
+                {
+                    Data = null,
+                    Message = "Teacher is not logged in",
+                    Status = false
+                };
+                return response;
+            }
+        }
+
+
 
     }
 }

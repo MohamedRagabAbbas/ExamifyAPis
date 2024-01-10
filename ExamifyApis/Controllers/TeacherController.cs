@@ -2,6 +2,7 @@
 using ExamifyApis.ModelServices;
 using ExamifyApis.Response;
 using ExamifyApis.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace ExamifyApis.Controllers
             _teacherServices = teacherServices;
         }
         [HttpGet("GetAllTeachers")]
+       // [EnableCors("AllowOrigin")]
         public async Task<ResponseClass<List<Teacher>>> GetAllTeachers()
         {
             var response = await _teacherServices.GetAllTeachers();
@@ -32,6 +34,7 @@ namespace ExamifyApis.Controllers
         }
 
         [HttpPost("AddTeacher")]
+       // [EnableCors("AllowOrigin")]
         public async Task<ResponseClass<Teacher>> AddTeacher([FromBody] TeacherInfo teacherInfo)
         {
             var response = await _teacherServices.AddTeacher(teacherInfo);
@@ -66,6 +69,14 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
+        // login 
+
+        [HttpGet("Login/{email}/{password}")]
+        public async Task<ResponseClass<Teacher>> Login(string email, string password)
+        {
+            var response = await _teacherServices.Login(email,password);
+            return response;
+        }
 
     }
 }

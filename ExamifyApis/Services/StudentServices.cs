@@ -449,7 +449,32 @@ namespace ExamifyApis.Services
                 };
                 return response;
             }
-        }   
+        } 
+        
+        //login
+
+        public async Task<ResponseClass<Student>> Login(string Email, string Password)
+        {
+            Student? student = await _context.Students.FirstOrDefaultAsync(s => s.Email == Email && s.Password == Password);
+            if(student!=null)
+            {
+                ResponseClass<Student> response = new ResponseClass<Student>()
+                {
+                    Message = "Login Successfully",
+                    Status = true,
+                    Data = student
+                };
+                return response;
+            }
+            else
+            {
+                ResponseClass<Student> response = new ResponseClass<Student>()
+                {
+                    Message = "Login Failed, Email Or Password Is Incorrect",
+                };
+                return response;
+            }
+        }
 
     }
 }

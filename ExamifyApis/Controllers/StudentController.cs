@@ -102,5 +102,12 @@ namespace ExamifyApis.Controllers
             var response = await _studentServices.RemoveGradeFromStudent(studentId, gradeId);
             return response;
         }
+
+        [HttpGet("Login/{email}/{password}")]
+        public async Task<ResponseClass<Student>> Login(string email, string password)
+        {
+            var response = await _studentServices.Login(email, password);
+            return response;
+        }
     }
 }
