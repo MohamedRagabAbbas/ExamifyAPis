@@ -31,10 +31,10 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
-        [HttpPost("AddCourse")]
-        public async Task<ResponseClass<Course>> AddCourse([FromBody] CourseInfo courseInfo)
+        [HttpPost("AddCourse/{teacherId}")]
+        public async Task<ResponseClass<Course>> AddCourse([FromBody] CourseInfo courseInfo, int teacherId)
         {
-            var response = await _courseServices.AddCourse(courseInfo);
+            var response = await _courseServices.AddCourse(courseInfo, teacherId);
             return response;
         }
 

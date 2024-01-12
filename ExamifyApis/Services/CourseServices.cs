@@ -36,7 +36,7 @@ namespace ExamifyApis.Services
             }
         }
 
-        public async Task<ResponseClass<Course>> AddCourse(CourseInfo courseInfo)
+        public async Task<ResponseClass<Course>> AddCourse(CourseInfo courseInfo, int teacherId)
         {
             if(courseInfo!=null)
             {
@@ -45,7 +45,7 @@ namespace ExamifyApis.Services
                     Code = courseInfo.Code,
                     Subject = courseInfo.Subject,
                     Grade = courseInfo.Grade,
-                    TeacherId = 0
+                    TeacherId = teacherId
                 };
                 await _context.Courses.AddAsync(course);
                 await _context.SaveChangesAsync();

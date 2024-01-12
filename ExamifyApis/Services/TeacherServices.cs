@@ -312,7 +312,45 @@ namespace ExamifyApis.Services
             }
         }
 
-
-
+        // get all courses for teacher with id = id
+        public async Task<ResponseClass<List<Course>>> GetCoursesByTeacherId(int id)
+        {
+            Teacher? teacher = await _dbContext.Teachers.FindAsync(id);
+            if(teacher != null)
+            {
+                List<Course> courses = await _dbContext.Courses
+                .Where(c => c.TeacherId == id)
+                .Select(c => new Course
+                {
+                    Id = c.Id,
+                    Code = c.Code,
+                    Subject = c.Subject,
+                    Grade = c.Grade,
+                    Students = c.Students,
+                    Exams = c.Exams,
+                    Grades = c.Grades,
+                    Answers = c.Answers
+                    // Exclude Teacher property
+                })
+                .ToListAsync();
+                ResponseClass<List<Course>> response = new ResponseClass<List<Course>>
+                {
+                    Data = courses,
+                    Message = "Courses are found",
+                    Status = true
+                };
+                return response;
+            }
+            else
+            {
+                ResponseClass<List<Course>> response = new ResponseClass<List<Course>>
+                {
+                    Data = null,
+                    Message = "Courses are not found",
+                    Status = false
+                };
+                return response;
+            }
+        }   
     }
 }

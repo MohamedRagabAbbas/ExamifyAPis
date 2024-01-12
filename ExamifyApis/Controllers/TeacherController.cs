@@ -78,5 +78,14 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
+        // get all courses for teacher with id = id
+
+        [HttpGet("GetAllCoursesForTeacher/{id}")]
+        public async Task<ResponseClass<List<Course>>> GetAllCoursesForTeacher(int id)
+        {
+            var response = await _teacherServices.GetCoursesByTeacherId(id);
+            return response;
+        }
+
     }
 }
