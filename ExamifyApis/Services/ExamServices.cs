@@ -47,6 +47,10 @@ namespace ExamifyApis.Services
                 {
                     Name = examInfo.Name,
                     Description = examInfo.Description,
+                    StartTime = examInfo.StartTime,
+                    EndTime = examInfo.EndTime,
+                    CourseId = examInfo.CourseId
+
                 };
                 await _dbContext.Exams.AddAsync(exam);
                 await _dbContext.SaveChangesAsync();
@@ -98,6 +102,10 @@ namespace ExamifyApis.Services
             {
                 exam.Name = examInfo.Name;
                 exam.Description = examInfo.Description;
+                exam.StartTime = examInfo.StartTime;
+                exam.EndTime = examInfo.EndTime;
+                exam.UpdatedOn = DateTime.Now;
+                exam.CourseId = examInfo.CourseId;
                 await _dbContext.SaveChangesAsync();
                 ResponseClass<Exam> response = new ResponseClass<Exam>()
                 {

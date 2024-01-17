@@ -139,6 +139,29 @@ namespace ExamifyApis.Services
             }
         }
 
+        public async Task<ResponseClass<List<Exam>>> GetExamsByCourseId(int courseId)
+        {
+            var exams = await _context.Exams.Where(e=>e.CourseId==courseId).ToListAsync();
+            if(exams!=null)
+            {
+                ResponseClass<List<Exam>> response = new ResponseClass<List<Exam>>()
+                {
+                    Data = exams,
+                    Message = "All Exams are send successfully...",
+                    Status = true
+                };
+                return response;
+            }
+            else
+            {
+                ResponseClass<List<Exam>> response = new ResponseClass<List<Exam>>()
+                {
+                    Message = "No Exams are Found...",
+                };
+                return response;
+            }
+        }
+
 
     }
 }

@@ -4,6 +4,7 @@ using ExamifyApis.Response;
 using ExamifyApis.ModelServices;
 using Microsoft.Identity.Client;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace ExamifyApis.Services
 {
@@ -144,10 +145,10 @@ namespace ExamifyApis.Services
         // Section 2
         // Operations on Student's Courses, Operations like Add, Remove, Update, Get, GetAll
 
-        public async Task<ResponseClass<Student>> AddCourseToStudent(int Student_Id, int Course_Id)
+        public async Task<ResponseClass<Student>> AddCourseToStudent(int Student_Id, string courseCode)
         {
             Student? student = await _context.Students.FindAsync(Student_Id);
-            Course? course = await _context.Courses.FindAsync(Course_Id);
+            Course? course = await _context.Courses.Where(x=> x.Code == courseCode).FirstAsync();
             if(student!=null && course!=null)
             {
                 // if it is the first time to add a course to the student, even I did this when adding new student
@@ -162,7 +163,7 @@ namespace ExamifyApis.Services
                 {
                     Message = "Course Added To Student Successfully",
                     Status = true,
-                    Data = student
+                    Data = null
                 };
                 return response;
             }
@@ -174,8 +175,58 @@ namespace ExamifyApis.Services
                 };
                 return response;
             }
-        } 
-        
+        }
+        public async Task<ResponseClass<ICollection<Course>>> GetAllCoursesByStudentId(int id)
+        {
+            Student? student = await _context.Students.Include(s => s.Courses).Select(c => new Student
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Email = c.Email,
+                Grade = c.Grade,
+                Password = c.Password,
+                Courses = c.Courses.Select(c => new Course
+                {
+                    Id = c.Id,
+                    Code = c.Code,
+                    Subject = c.Subject,
+                    Grade = c.Grade,
+                    // Exclude Lists
+                }).ToList(),
+                // Exclude Lists
+            }).FirstOrDefaultAsync(s => s.Id == id);
+
+            if (student != null)
+            {
+                ICollection<Course>? courses = student.Courses;
+                if(courses!=null)
+                {
+                    return new ResponseClass<ICollection<Course>>()
+                    {
+                        Message = "Courses Found Successfully",
+                        Status = true,
+                        Data = courses
+                    };
+                }
+                else
+                {
+                    return new ResponseClass<ICollection<Course>>()
+                    {
+                        Message = "Unsuccessful Process, Courses Are Not Found",
+                    };
+                }
+
+            }
+            else
+            {
+                return new ResponseClass<ICollection<Course>>()
+                {
+                    Message = "Unsuccessful Process, Stdeunt Are Not Found",
+                };
+            }
+        }
+
+
         public async Task<ResponseClass<Student>> RemoveCourseFromStudent(int Student_Id, int Course_Id)
         {
             Student? student = await _context.Students.FindAsync(Student_Id);

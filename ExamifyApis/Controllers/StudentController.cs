@@ -54,10 +54,17 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
-        [HttpPost("AddCourseToStudent")]
-        public async Task<ResponseClass<Student>> AddCourseToStudent(int studentId, int courseId)
+        [HttpPost("AddCourseToStudent/{studentId}/{courseCode}")]
+        public async Task<ResponseClass<Student>> AddCourseToStudent(int studentId, string courseCode)
         {
-            var response = await _studentServices.AddCourseToStudent(studentId, courseId);
+            var response = await _studentServices.AddCourseToStudent(studentId, courseCode);
+            return response;
+        }
+
+        [HttpGet("GetAllCoursesForStudent/{studentId}")]
+        public async Task<ResponseClass<ICollection<Course>>> GetAllCoursesForStudent(int studentId)
+        {
+            var response = await _studentServices.GetAllCoursesByStudentId(studentId);
             return response;
         }
 

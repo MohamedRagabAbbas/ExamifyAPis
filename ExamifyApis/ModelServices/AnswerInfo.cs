@@ -1,17 +1,13 @@
-﻿using Microsoft.Data.SqlClient.DataClassification;
+﻿using ExamifyApis.Models;
 
-namespace ExamifyApis.Models
+namespace ExamifyApis.ModelServices
 {
-    public class Answer
+    public class AnswerInfo
     {
-        public int Id { get; set; }
         public int StudentId { get; set; }
-        public Student Student { get; set; }
         public int QuestionId { get; set; }
-        public Question Question { get; set; }
         public string AnswerOption { get; set; } = "";
         public bool IsCorrect { get; set; }
         public double Grade { get; set; }
-
     }
 }

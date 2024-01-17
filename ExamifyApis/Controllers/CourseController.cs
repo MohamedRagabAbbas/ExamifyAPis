@@ -52,6 +52,13 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
+        [HttpGet("GetExamsByCourseId/{id}")]
+        public async Task<ResponseClass<List<Exam>>> GetExamsByCourseId(int id)
+        {
+            var response = await _courseServices.GetExamsByCourseId(id);
+            return response;
+        }
+
     }
 
 }

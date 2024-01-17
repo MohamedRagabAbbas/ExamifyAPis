@@ -4,6 +4,7 @@ using ExamifyApis.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamifyApis.Migrations
 {
     [DbContext(typeof(DBContextClass))]
-    partial class DBContextClassModelSnapshot : ModelSnapshot
+    [Migration("20240117021118_hh")]
+    partial class hh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,10 +52,10 @@ namespace ExamifyApis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ExamId")
+                    b.Property<int>("ExamId")
                         .HasColumnType("int");
 
                     b.Property<double>("Grade")
@@ -156,7 +159,7 @@ namespace ExamifyApis.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<int>("ExamId")
@@ -330,13 +333,17 @@ namespace ExamifyApis.Migrations
 
             modelBuilder.Entity("ExamifyApis.Models.Answer", b =>
                 {
-                    b.HasOne("ExamifyApis.Models.Course", null)
+                    b.HasOne("ExamifyApis.Models.Course", "Course")
                         .WithMany("Answers")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("ExamifyApis.Models.Exam", null)
+                    b.HasOne("ExamifyApis.Models.Exam", "Exam")
                         .WithMany("Answers")
-                        .HasForeignKey("ExamId");
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ExamifyApis.Models.Question", "Question")
                         .WithMany("Answers")
@@ -349,6 +356,10 @@ namespace ExamifyApis.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Exam");
 
                     b.Navigation("Question");
 
@@ -379,9 +390,11 @@ namespace ExamifyApis.Migrations
 
             modelBuilder.Entity("ExamifyApis.Models.Grade", b =>
                 {
-                    b.HasOne("ExamifyApis.Models.Course", null)
+                    b.HasOne("ExamifyApis.Models.Course", "Course")
                         .WithMany("Grades")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ExamifyApis.Models.Exam", "Exam")
                         .WithMany("Grades")
@@ -395,6 +408,8 @@ namespace ExamifyApis.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.Navigation("Course");
+
                     b.Navigation("Exam");
 
                     b.Navigation("Student");
@@ -405,7 +420,7 @@ namespace ExamifyApis.Migrations
                     b.HasOne("ExamifyApis.Models.Exam", "Exam")
                         .WithMany("Questions")
                         .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Exam");
