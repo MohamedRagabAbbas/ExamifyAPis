@@ -328,8 +328,6 @@ namespace ExamifyApis.Services
                     Grade = c.Grade,
                     Students = c.Students,
                     Exams = c.Exams,
-                    Grades = c.Grades,
-                    Answers = c.Answers
                     // Exclude Teacher property
                 })
                 .ToListAsync();

@@ -82,33 +82,6 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
-        [HttpPost("AddAnswerToStudent")] 
-        public async Task<ResponseClass<Student>> AddAnswerToStudent(int studentId, int answerId)
-        {
-            var response = await _studentServices.AddAnswerToStudent(studentId, answerId);
-            return response;
-        }
-
-        [HttpDelete("RemoveAnswerFromStudent")]
-
-        public async Task<ResponseClass<Student>> RemoveAnswerFromStudent(int studentId, int answerId)
-        {
-            var response = await _studentServices.RemoveAnswerFromStudent(studentId, answerId);
-            return response;
-        }
-
-        [HttpPost("AddGradeToStudent")] 
-        public async Task<ResponseClass<Student>> AddGradeToStudent(int studentId, int gradeId)
-        {
-            var response = await _studentServices.AddGradeToStudent(studentId, gradeId);
-            return response;
-        }
-        [HttpDelete("RemoveGradeFromStudent")] 
-        public async Task<ResponseClass<Student>> RemoveGradeFromStudent(int studentId, int gradeId)
-        {
-            var response = await _studentServices.RemoveGradeFromStudent(studentId, gradeId);
-            return response;
-        }
 
         [HttpGet("Login/{email}/{password}")]
         public async Task<ResponseClass<Student>> Login(string email, string password)

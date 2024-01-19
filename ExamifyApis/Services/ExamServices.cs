@@ -49,8 +49,9 @@ namespace ExamifyApis.Services
                     Description = examInfo.Description,
                     StartTime = examInfo.StartTime,
                     EndTime = examInfo.EndTime,
-                    CourseId = examInfo.CourseId
-
+                    CourseId = examInfo.CourseId,
+                    AttemptsNumber = examInfo.AttemptsNumber,
+                    StudentAttempts = new List<StudentAttempts>()
                 };
                 await _dbContext.Exams.AddAsync(exam);
                 await _dbContext.SaveChangesAsync();
@@ -106,6 +107,7 @@ namespace ExamifyApis.Services
                 exam.EndTime = examInfo.EndTime;
                 exam.UpdatedOn = DateTime.Now;
                 exam.CourseId = examInfo.CourseId;
+                exam.AttemptsNumber = examInfo.AttemptsNumber;
                 await _dbContext.SaveChangesAsync();
                 ResponseClass<Exam> response = new ResponseClass<Exam>()
                 {
@@ -227,6 +229,9 @@ namespace ExamifyApis.Services
                 return response;
             }
         }
+       
+
+       
 
     }
 }

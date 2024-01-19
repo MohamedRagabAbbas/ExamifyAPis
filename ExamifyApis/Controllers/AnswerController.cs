@@ -52,13 +52,5 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
-        [HttpGet("GetAnswersByStudentId/{studentId}")]
-        public async Task<ResponseClass<List<Answer>>> GetAnswersByStudentId(int studentId)
-        {
-            var response = await _answerServices.GetAnswersByStudentId(studentId);
-            return response;
-        }
-
-
     }
 }

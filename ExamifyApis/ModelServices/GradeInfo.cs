@@ -4,8 +4,7 @@ namespace ExamifyApis.ModelServices
 {
     public class GradeInfo
     {
-        public int ExamId { get; set; }
-        public int StudentId { get; set; }
+        public int AttemptId { get; set; }
         public decimal TotalGrade { get; set; }
     }
 }

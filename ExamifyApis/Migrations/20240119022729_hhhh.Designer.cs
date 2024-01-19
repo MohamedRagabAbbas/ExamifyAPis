@@ -4,6 +4,7 @@ using ExamifyApis.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamifyApis.Migrations
 {
     [DbContext(typeof(DBContextClass))]
-    partial class DBContextClassModelSnapshot : ModelSnapshot
+    [Migration("20240119022729_hhhh")]
+    partial class hhhh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +55,9 @@ namespace ExamifyApis.Migrations
                     b.Property<int>("AttemptId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Grade")
                         .HasColumnType("float");
 
@@ -64,6 +70,8 @@ namespace ExamifyApis.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AttemptId");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("QuestionId");
 
@@ -170,6 +178,9 @@ namespace ExamifyApis.Migrations
                     b.Property<int>("AttemptId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalGrade")
                         .HasColumnType("decimal(18,2)");
 
@@ -177,6 +188,8 @@ namespace ExamifyApis.Migrations
 
                     b.HasIndex("AttemptId")
                         .IsUnique();
+
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Grades");
                 });
@@ -361,6 +374,10 @@ namespace ExamifyApis.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("ExamifyApis.Models.Course", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("CourseId");
+
                     b.HasOne("ExamifyApis.Models.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
@@ -413,6 +430,10 @@ namespace ExamifyApis.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("ExamifyApis.Models.Course", null)
+                        .WithMany("Grades")
+                        .HasForeignKey("CourseId");
+
                     b.Navigation("Attempt");
                 });
 
@@ -455,7 +476,11 @@ namespace ExamifyApis.Migrations
 
             modelBuilder.Entity("ExamifyApis.Models.Course", b =>
                 {
+                    b.Navigation("Answers");
+
                     b.Navigation("Exams");
+
+                    b.Navigation("Grades");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Exam", b =>

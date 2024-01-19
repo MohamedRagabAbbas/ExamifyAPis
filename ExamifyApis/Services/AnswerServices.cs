@@ -20,11 +20,11 @@ namespace ExamifyApis.Services
             {
                 var answer = new Answer
                 {
-                    StudentId = answerInfo.StudentId,
                     QuestionId = answerInfo.QuestionId,
                     AnswerOption = answerInfo.AnswerOption,
                     IsCorrect = answerInfo.IsCorrect,
-                    Grade = answerInfo.Grade
+                    Grade = answerInfo.Grade,
+                    AttemptId = answerInfo.AttemptId
                 };
                 await _dbContext.Answers.AddAsync(answer);
                 await _dbContext.SaveChangesAsync();
@@ -79,15 +79,18 @@ namespace ExamifyApis.Services
             try
             {
                 var answer = await _dbContext.Answers.FindAsync(id);
-                answer.StudentId = answerInfo.StudentId;
-                answer.QuestionId = answerInfo.QuestionId;
-                answer.AnswerOption = answerInfo.AnswerOption;
-                answer.IsCorrect = answerInfo.IsCorrect;
-                answer.Grade = answerInfo.Grade;
-                await _dbContext.SaveChangesAsync();
-                response.Data = answer;
-                response.Message = "Answer Updated Successfully";
-                response.Status = true;
+                if(answer!=null)
+                {
+                    answer.QuestionId = answerInfo.QuestionId;
+                    answer.AnswerOption = answerInfo.AnswerOption;
+                    answer.IsCorrect = answerInfo.IsCorrect;
+                    answer.Grade = answerInfo.Grade;
+                    answer.AttemptId = answerInfo.AttemptId;
+                    await _dbContext.SaveChangesAsync();
+                    response.Data = answer;
+                    response.Message = "Answer Updated Successfully";
+                    response.Status = true;
+                }
             }
             catch (Exception e)
             {
@@ -102,11 +105,15 @@ namespace ExamifyApis.Services
             try
             {
                 var answer = await _dbContext.Answers.FindAsync(id);
-                _dbContext.Answers.Remove(answer);
-                await _dbContext.SaveChangesAsync();
-                response.Data = answer;
-                response.Message = "Answer Deleted Successfully";
-                response.Status = true;
+                if(answer!=null)
+                {
+                    _dbContext.Answers.Remove(answer);
+                    await _dbContext.SaveChangesAsync();
+                    response.Data = answer;
+                    response.Message = "Answer Deleted Successfully";
+                    response.Status = true;
+                }
+                
             }
             catch (Exception e)
             {
@@ -116,24 +123,7 @@ namespace ExamifyApis.Services
             return response;
         }
 
-        // get answers by student id
-        public async Task<ResponseClass<List<Answer>>> GetAnswersByStudentId(int id)
-        {
-            var response = new ResponseClass<List<Answer>>();
-            try
-            {
-                var answers = await _dbContext.Answers.Where(a => a.StudentId == id).ToListAsync();
-                response.Data = answers;
-                response.Message = "Answers Fetched Successfully";
-                response.Status = true;
-            }
-            catch (Exception e)
-            {
-                response.Message = e.Message;
-                response.Status = false;
-            }
-            return response;
-        }
+       
 
     }
 }

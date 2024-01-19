@@ -42,8 +42,7 @@ namespace ExamifyApis.Services
             {
                 Grade grade = new Grade()
                 {
-                    ExamId = gradeInfo.ExamId,
-                    StudentId = gradeInfo.StudentId,
+                    AttemptId = gradeInfo.AttemptId,
                     TotalGrade = gradeInfo.TotalGrade
                 };
                 await _context.Grades.AddAsync(grade);

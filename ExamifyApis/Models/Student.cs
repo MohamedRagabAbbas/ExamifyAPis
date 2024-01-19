@@ -8,7 +8,6 @@
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public ICollection<Course>? Courses { get; set; } = null;
-        public List<Answer>? Answers { get; set; } = null;
-        public List<Grade>? Grades { get; set; }
+        public List<StudentAttempts>? StudentAttempts { get; set; } = null;
     }
 }

@@ -30,6 +30,7 @@ builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<QuestionServices>();
 builder.Services.AddScoped<AnswerServices>();
 builder.Services.AddScoped<GradeServices>();
+builder.Services.AddScoped<StudentAttemptsServices>();
 
 // builder.Services.AddScoped<AnswerServices>();
 // builder.Services.AddScoped<ExamResultServices>();

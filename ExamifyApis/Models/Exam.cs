@@ -14,7 +14,8 @@
         public List<Question>? Questions { get; set; } 
         public int CourseId { get; set; } 
         public Course Course { get; set;} 
-        public List<Grade>? Grades { get; set; }
-        public List<Answer>? Answers { get; set; } = null;
+
+        public List<StudentAttempts>? StudentAttempts { get; set; }
+        public int AttemptsNumber { get; set; } = 1;
     }
 }
