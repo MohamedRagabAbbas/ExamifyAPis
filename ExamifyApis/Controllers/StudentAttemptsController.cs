@@ -22,10 +22,24 @@ namespace ExamifyApis.Controllers
             var studentAttempts = await services.GetOrCreateStudentAttempts(studentId, examId);
             return studentAttempts;
         }
-        [HttpPost("AddAttempt")]
+        [HttpPost("AddAttempt/{studentAttemptsId}")]
         public async Task<ResponseClass<Attempt>> AddAttempt(int studentAttemptsId)
         {
             var studentAttempts = await services.AddAttempt(studentAttemptsId);
+            return studentAttempts;
+        }
+
+        [HttpGet("GetAttemptsId/{studentId}/{examId}")]
+        public async Task<ResponseClass<List<int>>> GetAttemptsId(int studentId, int examId)
+        {
+            var studentAttempts = await services.GetAttemptsId(studentId, examId);
+            return studentAttempts;
+        }
+
+        [HttpGet("GetAttempt/{id}")]
+        public async Task<ResponseClass<Attempt>> GetAttempt(int id)
+        {
+            var studentAttempts = await services.GetAttempt(id);
             return studentAttempts;
         }
     }
