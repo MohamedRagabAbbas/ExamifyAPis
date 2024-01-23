@@ -361,13 +361,13 @@ namespace ExamifyApis.Migrations
                     b.HasOne("ExamifyApis.Models.Attempt", "Attempt")
                         .WithMany("Answers")
                         .HasForeignKey("AttemptId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExamifyApis.Models.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Attempt");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamifyApis.Migrations
 {
     [DbContext(typeof(DBContextClass))]
-    [Migration("20240112193309_sd")]
-    partial class sd
+    [Migration("20240121125126_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,10 +52,7 @@ namespace ExamifyApis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExamId")
+                    b.Property<int>("AttemptId")
                         .HasColumnType("int");
 
                     b.Property<double>("Grade")
@@ -67,20 +64,31 @@ namespace ExamifyApis.Migrations
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttemptId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("ExamifyApis.Models.Attempt", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("StudentAttemptsId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("StudentAttemptsId");
 
-                    b.HasIndex("ExamId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Answers");
+                    b.ToTable("Attempts");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Course", b =>
@@ -121,6 +129,9 @@ namespace ExamifyApis.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AttemptsNumber")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
@@ -159,25 +170,19 @@ namespace ExamifyApis.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CourseId")
+                    b.Property<int>("AttemptId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("OutOf")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalGrade")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("ExamId");
-
-                    b.HasIndex("StudentId");
+                    b.HasIndex("AttemptId")
+                        .IsUnique();
 
                     b.ToTable("Grades");
                 });
@@ -213,7 +218,11 @@ namespace ExamifyApis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Ques")
+                    b.Property<string>("QuestionNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -254,6 +263,29 @@ namespace ExamifyApis.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("ExamifyApis.Models.StudentAttempts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentAttempts");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Teacher", b =>
@@ -329,37 +361,32 @@ namespace ExamifyApis.Migrations
 
             modelBuilder.Entity("ExamifyApis.Models.Answer", b =>
                 {
-                    b.HasOne("ExamifyApis.Models.Course", "Course")
+                    b.HasOne("ExamifyApis.Models.Attempt", "Attempt")
                         .WithMany("Answers")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("ExamifyApis.Models.Exam", "Exam")
-                        .WithMany("Answers")
-                        .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("AttemptId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExamifyApis.Models.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExamifyApis.Models.Student", "Student")
-                        .WithMany("Answers")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Exam");
+                    b.Navigation("Attempt");
 
                     b.Navigation("Question");
+                });
 
-                    b.Navigation("Student");
+            modelBuilder.Entity("ExamifyApis.Models.Attempt", b =>
+                {
+                    b.HasOne("ExamifyApis.Models.StudentAttempts", "StudentAttempts")
+                        .WithMany("Attempts")
+                        .HasForeignKey("StudentAttemptsId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("StudentAttempts");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Course", b =>
@@ -386,29 +413,13 @@ namespace ExamifyApis.Migrations
 
             modelBuilder.Entity("ExamifyApis.Models.Grade", b =>
                 {
-                    b.HasOne("ExamifyApis.Models.Course", "Course")
-                        .WithMany("Grades")
-                        .HasForeignKey("CourseId")
+                    b.HasOne("ExamifyApis.Models.Attempt", "Attempt")
+                        .WithOne("Grade")
+                        .HasForeignKey("ExamifyApis.Models.Grade", "AttemptId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ExamifyApis.Models.Exam", "Exam")
-                        .WithMany("Grades")
-                        .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("ExamifyApis.Models.Student", "Student")
-                        .WithMany("Grades")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Exam");
-
-                    b.Navigation("Student");
+                    b.Navigation("Attempt");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Question", b =>
@@ -416,28 +427,48 @@ namespace ExamifyApis.Migrations
                     b.HasOne("ExamifyApis.Models.Exam", "Exam")
                         .WithMany("Questions")
                         .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Exam");
                 });
 
-            modelBuilder.Entity("ExamifyApis.Models.Course", b =>
+            modelBuilder.Entity("ExamifyApis.Models.StudentAttempts", b =>
+                {
+                    b.HasOne("ExamifyApis.Models.Exam", "Exam")
+                        .WithMany("StudentAttempts")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ExamifyApis.Models.Student", "Student")
+                        .WithMany("StudentAttempts")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("ExamifyApis.Models.Attempt", b =>
                 {
                     b.Navigation("Answers");
 
-                    b.Navigation("Exams");
+                    b.Navigation("Grade");
+                });
 
-                    b.Navigation("Grades");
+            modelBuilder.Entity("ExamifyApis.Models.Course", b =>
+                {
+                    b.Navigation("Exams");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Exam", b =>
                 {
-                    b.Navigation("Answers");
-
-                    b.Navigation("Grades");
-
                     b.Navigation("Questions");
+
+                    b.Navigation("StudentAttempts");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Question", b =>
@@ -447,9 +478,12 @@ namespace ExamifyApis.Migrations
 
             modelBuilder.Entity("ExamifyApis.Models.Student", b =>
                 {
-                    b.Navigation("Answers");
+                    b.Navigation("StudentAttempts");
+                });
 
-                    b.Navigation("Grades");
+            modelBuilder.Entity("ExamifyApis.Models.StudentAttempts", b =>
+                {
+                    b.Navigation("Attempts");
                 });
 
             modelBuilder.Entity("ExamifyApis.Models.Teacher", b =>

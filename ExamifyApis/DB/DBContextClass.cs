@@ -1,4 +1,5 @@
 ﻿using ExamifyApis.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
@@ -13,38 +14,38 @@ namespace ExamifyApis.DB
 
             /*Course Relations*/
 
-                // Course - Teacher (Many-to-One)
-                modelBuilder.Entity<Course>()
-                    .HasOne(c => c.Teacher)
-                    .WithMany(t => t.Courses)
-                    .HasForeignKey(c => c.TeacherId)
-                    .OnDelete(DeleteBehavior.NoAction);
+            // Course - Teacher (Many-to-One)
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.Teacher)
+                .WithMany(t => t.Courses)
+                .HasForeignKey(c => c.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-                // Course - Student (Many-to-Many)
-                modelBuilder.Entity<Course>()
-                    .HasMany(c => c.Students)
-                    .WithMany(s => s.Courses)
-                    .UsingEntity(j => j.ToTable("CourseStudent"));
+            // Course - Student (Many-to-Many)
+            modelBuilder.Entity<Course>()
+                .HasMany(c => c.Students)
+                .WithMany(s => s.Courses)
+                .UsingEntity(j => j.ToTable("CourseStudent"));
 
-                // Course - Exam (One-to-Many)
-                modelBuilder.Entity<Course>()
-                    .HasMany(c => c.Exams)
-                    .WithOne(e => e.Course)
-                    .HasForeignKey(e => e.CourseId)
-                    .OnDelete(DeleteBehavior.NoAction);
+            // Course - Exam (One-to-Many)
+            modelBuilder.Entity<Course>()
+                .HasMany(c => c.Exams)
+                .WithOne(e => e.Course)
+                .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-                // Course - Grade (One-to-Many)
+            // Course - Grade (One-to-Many)
 
 
 
             /*Stdeunt Relations*/
 
-                // Student - Answer (One-to-Many)
-                modelBuilder.Entity<Student>()
-                    .HasMany(s => s.StudentAttempts)
-                    .WithOne(a => a.Student)
-                    .HasForeignKey(a => a.StudentId)
-                    .OnDelete(DeleteBehavior.NoAction);
+            // Student - Answer (One-to-Many)
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.StudentAttempts)
+                .WithOne(a => a.Student)
+                .HasForeignKey(a => a.StudentId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             /*Exam Relations*/
@@ -71,52 +72,53 @@ namespace ExamifyApis.DB
 
 
 
-                // Answer - Question (Many-to-One)
-                modelBuilder.Entity<Answer>()
-                    .HasOne(a => a.Question)
-                    .WithMany(q => q.Answers)
-                    .HasForeignKey(a => a.QuestionId)
-                    .OnDelete(DeleteBehavior.NoAction);
+            // Answer - Question (Many-to-One)
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.Question)
+                .WithMany(q => q.Answers)
+                .HasForeignKey(a => a.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             /*Question Relations*/
 
-                // Question - Answer (One-to-Many)
-                modelBuilder.Entity<Question>()
-                    .HasMany(q => q.Answers)
-                    .WithOne(a => a.Question)
-                    .HasForeignKey(a => a.QuestionId)
-                    .OnDelete(DeleteBehavior.NoAction);
+            // Question - Answer (One-to-Many)
+            modelBuilder.Entity<Question>()
+                .HasMany(q => q.Answers)
+                .WithOne(a => a.Question)
+                .HasForeignKey(a => a.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             /*Teacher Relations*/
-                // Teacher - Course (One-to-Many)
-                    modelBuilder.Entity<Teacher>()
-                        .HasMany(t => t.Courses)
-                        .WithOne(c => c.Teacher)
-                        .HasForeignKey(c => c.TeacherId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            // Teacher - Course (One-to-Many)
+            modelBuilder.Entity<Teacher>()
+                .HasMany(t => t.Courses)
+                .WithOne(c => c.Teacher)
+                .HasForeignKey(c => c.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             /*Attempt Relations*/
             // Attempt - Answer (Many-to-one)
-                modelBuilder.Entity<Attempt>()
-                    .HasMany(a => a.Answers)
-                    .WithOne(a => a.Attempt)
-                    .HasForeignKey(a => a.AttemptId)
-                    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Attempt>()
+                .HasMany(a => a.Answers)
+                .WithOne(a => a.Attempt)
+                .HasForeignKey(a => a.AttemptId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Attempt - Grade (One-to-One)
             modelBuilder.Entity<Attempt>()
                     .HasOne(a => a.Grade)
                     .WithOne(g => g.Attempt)
                     .HasForeignKey<Grade>(g => g.AttemptId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
+
 
             // StudentAttempts - Attempt (Many-to-One)
             modelBuilder.Entity<StudentAttempts>()
                     .HasMany(sa => sa.Attempts)
                     .WithOne(a => a.StudentAttempts)
                     .HasForeignKey(sa => sa.StudentAttemptsId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<StudentAttempts>()
                 .HasOne(sa => sa.Student)
@@ -128,9 +130,7 @@ namespace ExamifyApis.DB
                 .HasOne(sa => sa.Exam)
                     .WithMany(e => e.StudentAttempts)
                     .HasForeignKey(sa => sa.ExamId)
-                    .OnDelete(DeleteBehavior.NoAction);
-
-
+                    .OnDelete(DeleteBehavior.Cascade);
 
         }
 
