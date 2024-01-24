@@ -23,9 +23,7 @@ namespace ExamifyApis.Services
             {
                 Teacher teacher = new Teacher()
                 {
-                    Name = teacherInfo.Name,
-                    Email = teacherInfo.Email,
-                    Password = teacherInfo.Password
+                    ApplicationUserId = teacherInfo.ApplicationUserId,
                 };
                 await _dbContext.Teachers.AddAsync(teacher);
                 await _dbContext.SaveChangesAsync();
@@ -77,9 +75,6 @@ namespace ExamifyApis.Services
             Teacher teacher = await _dbContext.Teachers.FindAsync(id);
             if(teacher != null)
             {
-                teacher.Name = teacherInfo.Name;
-                teacher.Email = teacherInfo.Email;
-                teacher.Password = teacherInfo.Password;
                 _dbContext.Teachers.Update(teacher);
                 await _dbContext.SaveChangesAsync();
                 ResponseClass<Teacher> response = new ResponseClass<Teacher>()
@@ -287,7 +282,7 @@ namespace ExamifyApis.Services
 
         // login
 
-        public async Task<ResponseClass<Teacher>> Login(string email, string password)
+       /* public async Task<ResponseClass<Teacher>> Login(string email, string password)
         {
             Teacher teacher = await _dbContext.Teachers.FirstOrDefaultAsync(t => t.Email == email && t.Password == password);
             if(teacher != null)
@@ -310,7 +305,7 @@ namespace ExamifyApis.Services
                 };
                 return response;
             }
-        }
+        } */
 
         // get all courses for teacher with id = id
         public async Task<ResponseClass<List<Course>>> GetCoursesByTeacherId(int id)

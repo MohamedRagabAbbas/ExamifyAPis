@@ -71,12 +71,12 @@ namespace ExamifyApis.Controllers
 
         // login 
 
-        [HttpGet("Login/{email}/{password}")]
+       /* [HttpGet("Login/{email}/{password}")]
         public async Task<ResponseClass<Teacher>> Login(string email, string password)
         {
             var response = await _teacherServices.Login(email,password);
             return response;
-        }
+        }*/
 
         // get all courses for teacher with id = id
 

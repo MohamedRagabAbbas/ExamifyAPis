@@ -1,5 +1,6 @@
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\appsettings.Development.json
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\appsettings.json
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\ExamifyApis.staticwebassets.runtime.json
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\ExamifyApis.exe
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\ExamifyApis.deps.json
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\ExamifyApis.runtimeconfig.json
@@ -8,6 +9,10 @@ D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\ExamifyApis.pdb
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Azure.Core.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Azure.Identity.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Humanizer.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
@@ -17,6 +22,10 @@ D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.EntityFramewor
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Identity.Client.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
@@ -74,9 +83,4 @@ D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\refint\ExamifyApis.dll
 D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\ExamifyApis.pdb
 D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\ExamifyApis.genruntimeconfig.cache
 D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\ref\ExamifyApis.dll
-D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
-D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
-D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
-D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -24,12 +24,10 @@ namespace ExamifyApis.Services
         public async Task<ResponseClass<Student>> AddStudent(StudentInfo studentInfo)
         {
             Student student = new Student() { 
-                Email = studentInfo.Email,
                 Grade = studentInfo.Grade,
-                Name = studentInfo.Name,
-                Password = studentInfo.Password,
+                ApplicationUserId = studentInfo.ApplicationUserId,
                 Courses = new List<Course>(),
-                StudentAttempts = new List<StudentAttempts>()
+                StudentAttempts = new List<StudentAttempts>(),
                 };
             await _context.Students.AddAsync(student);
             await _context.SaveChangesAsync();
@@ -73,10 +71,7 @@ namespace ExamifyApis.Services
             Student? student = await _context.Students.FindAsync(id);
             if(student!=null)
             {
-                student.Name = studentInfo.Name;
                 student.Grade = studentInfo.Grade;
-                student.Email = studentInfo.Email;
-                student.Password = studentInfo.Password;
                 _context.SaveChanges();
                 ResponseClass<Student> response = new ResponseClass<Student>()
                 {
@@ -180,10 +175,7 @@ namespace ExamifyApis.Services
             Student? student = await _context.Students.Include(s => s.Courses).Select(c => new Student
             {
                 Id = c.Id,
-                Name = c.Name,
-                Email = c.Email,
                 Grade = c.Grade,
-                Password = c.Password,
                 Courses = c.Courses.Select(c => new Course
                 {
                     Id = c.Id,
@@ -331,7 +323,7 @@ namespace ExamifyApis.Services
 
         //login
 
-        public async Task<ResponseClass<Student>> Login(string Email, string Password)
+        /*public async Task<ResponseClass<Student>> Login(string Email, string Password)
         {
             Student? student = await _context.Students.FirstOrDefaultAsync(s => s.Email == Email && s.Password == Password);
             if(student!=null)
@@ -352,7 +344,7 @@ namespace ExamifyApis.Services
                 };
                 return response;
             }
-        }
+        }*/
 
     }
 }

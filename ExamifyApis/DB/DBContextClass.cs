@@ -1,16 +1,21 @@
 ﻿using ExamifyApis.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
 namespace ExamifyApis.DB
 {
-    public class DBContextClass : DbContext
+    public class DBContextClass : IdentityDbContext<ApplicationUser>
     {
         public DBContextClass(DbContextOptions<DBContextClass> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+
+
 
             /*Course Relations*/
 
@@ -77,7 +82,7 @@ namespace ExamifyApis.DB
                 .HasOne(a => a.Question)
                 .WithMany(q => q.Answers)
                 .HasForeignKey(a => a.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             /*Question Relations*/
 
@@ -86,7 +91,7 @@ namespace ExamifyApis.DB
                 .HasMany(q => q.Answers)
                 .WithOne(a => a.Question)
                 .HasForeignKey(a => a.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             /*Teacher Relations*/
