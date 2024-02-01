@@ -2,12 +2,16 @@
 using ExamifyApis.ModelServices;
 using ExamifyApis.Response;
 using ExamifyApis.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ExamifyApis.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
@@ -80,6 +84,18 @@ namespace ExamifyApis.Controllers
         {
             var response = await _studentServices.RemoveCourseFromStudent(studentId, courseId);
             return response;
+        }
+
+        [HttpGet]
+        [Route("GetStudentId/{id}")]
+        public async Task<IActionResult> GetStudentId(string id)
+        {
+            var response = await _studentServices.GetStudentId(id);
+            if(response is null)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
         }
 
 

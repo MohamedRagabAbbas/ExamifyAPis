@@ -46,14 +46,18 @@ builder.Services.AddScoped<AnswerServices>();
 builder.Services.AddScoped<GradeServices>();
 builder.Services.AddScoped<StudentAttemptsServices>();
 builder.Services.AddScoped<AuthenticationManagement>();
+
+
+builder.Services.Configure<JWT>(builder.Configuration.GetSection("Jwt"));
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Issuer"],

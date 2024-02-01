@@ -3,9 +3,11 @@ using ExamifyApis.Models;
 using ExamifyApis.ModelServices;
 using ExamifyApis.Response;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace ExamifyApis.Services
 {
@@ -15,13 +17,16 @@ namespace ExamifyApis.Services
         private readonly DBContextClass _dbContext;
         private readonly StudentServices _studentServices;
         private readonly TeacherServices _teacherServices;
+        private readonly JWT _JWT;
 
-        public AuthenticationManagement(UserManager<ApplicationUser> userManager, DBContextClass dbContext, StudentServices studentServices, TeacherServices teacherServices)
+        public AuthenticationManagement(UserManager<ApplicationUser> userManager, DBContextClass dbContext, StudentServices studentServices, TeacherServices teacherServices, 
+            IOptionsMonitor<JWT> jWT)
         {
             _userManager = userManager;
             _dbContext = dbContext;
             _studentServices = studentServices;
             _teacherServices = teacherServices;
+            _JWT = jWT.CurrentValue;
         }
 
         public async Task<AuthenticationResponse> Register(AuthSignUp model)
@@ -158,7 +163,7 @@ namespace ExamifyApis.Services
         private string GenerateJwtToken(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = System.Text.Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
+            var key = System.Text.Encoding.ASCII.GetBytes(_JWT.Key);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

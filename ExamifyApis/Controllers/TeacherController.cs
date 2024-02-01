@@ -2,12 +2,15 @@
 using ExamifyApis.ModelServices;
 using ExamifyApis.Response;
 using ExamifyApis.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamifyApis.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherController : ControllerBase
@@ -85,6 +88,18 @@ namespace ExamifyApis.Controllers
         {
             var response = await _teacherServices.GetCoursesByTeacherId(id);
             return response;
+        }
+
+        [HttpGet]
+        [Route("GetTeacherId/{id}")]
+        public async Task<IActionResult> GetTeacherId(string id)
+        {
+            var response = await _teacherServices.GetTeacherId(id);
+            if (response is null)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
         }
 
     }

@@ -9,6 +9,7 @@ D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\ExamifyApis.pdb
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Azure.Core.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Azure.Identity.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Humanizer.dll
+D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -83,4 +84,3 @@ D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\refint\ExamifyApis.dll
 D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\ExamifyApis.pdb
 D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\ExamifyApis.genruntimeconfig.cache
 D:\My Projects\ExamifyApis\ExamifyApis\obj\Debug\net7.0\ref\ExamifyApis.dll
-D:\My Projects\ExamifyApis\ExamifyApis\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

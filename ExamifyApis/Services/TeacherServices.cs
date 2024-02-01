@@ -344,6 +344,25 @@ namespace ExamifyApis.Services
                 };
                 return response;
             }
-        }   
+        }
+        public async Task<ResponseClass<int>> GetTeacherId(string ApplicationUserId)
+        {
+            var teacher = await _dbContext.Teachers.Where(x => x.ApplicationUserId == ApplicationUserId).FirstOrDefaultAsync();
+            if (teacher is null)
+            {
+                return new ResponseClass<int>()
+                {
+                    Message = "Cannot Find This Teacher!",
+                    Status = false,
+
+                };
+            }
+            return new ResponseClass<int>()
+            {
+                Message = "This Teacher Is Found Successfully...",
+                Status = true,
+                Data = teacher.Id
+            };
+        }
     }
 }

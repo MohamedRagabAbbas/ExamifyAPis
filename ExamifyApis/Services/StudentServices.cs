@@ -321,6 +321,26 @@ namespace ExamifyApis.Services
             }
         }   
 
+        public async Task<ResponseClass<int>> GetStudentId(string ApplicationUserId)
+        {
+            var student = await _context.Students.Where(x => x.ApplicationUserId == ApplicationUserId).FirstOrDefaultAsync();
+            if(student is null)
+            {
+                return new ResponseClass<int>()
+                {
+                    Message = "Cannot Find This Student!",
+                    Status = false,
+                    
+                };
+            }
+            return new ResponseClass<int>()
+            {
+                Message = "This Student Is Found Successfully...",
+                Status = true,
+                Data = student.Id
+            };
+        }
+
         //login
 
         /*public async Task<ResponseClass<Student>> Login(string Email, string Password)
