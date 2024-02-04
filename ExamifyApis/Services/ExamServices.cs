@@ -2,6 +2,7 @@
 using ExamifyApis.Models;
 using ExamifyApis.ModelServices;
 using ExamifyApis.Response;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamifyApis.Services
@@ -9,9 +10,11 @@ namespace ExamifyApis.Services
     public class ExamServices
     {
         private readonly DBContextClass _dbContext;
-        public ExamServices(DBContextClass dbContext)
+        private readonly UserManager<ApplicationUser> _user;
+        public ExamServices(DBContextClass dbContext, UserManager<ApplicationUser> user)
         {
             _dbContext = dbContext;
+            _user = user;
         }
 
         // section one
@@ -51,7 +54,8 @@ namespace ExamifyApis.Services
                     EndTime = examInfo.EndTime,
                     CourseId = examInfo.CourseId,
                     AttemptsNumber = examInfo.AttemptsNumber,
-                    StudentAttempts = new List<StudentAttempts>()
+                    StudentAttempts = new List<StudentAttempts>(),
+                    Duration = examInfo.Duration
                 };
                 await _dbContext.Exams.AddAsync(exam);
                 await _dbContext.SaveChangesAsync();
@@ -108,6 +112,7 @@ namespace ExamifyApis.Services
                 exam.UpdatedOn = DateTime.Now;
                 exam.CourseId = examInfo.CourseId;
                 exam.AttemptsNumber = examInfo.AttemptsNumber;
+                exam.Duration = examInfo.Duration;
                 await _dbContext.SaveChangesAsync();
                 ResponseClass<Exam> response = new ResponseClass<Exam>()
                 {
@@ -229,9 +234,103 @@ namespace ExamifyApis.Services
                 return response;
             }
         }
-       
 
-       
+        public async Task<ResponseClass<string>> GetTeacherName(int examId)
+        {
+            var exam = await _dbContext.Exams.FindAsync(examId);
+            if(exam is not null)
+            {
+                var course = await _dbContext.Courses.FindAsync(exam.CourseId);
+                if(course is not null)
+                {
+                    var teacher = await _dbContext.Teachers.FindAsync(course.TeacherId);
+                    if(teacher is not null)
+                    {
+                       var user = _user.FindByIdAsync(teacher.ApplicationUserId).Result;
+                        if (user is not null)
+                        {
+                            ResponseClass<string> response3 = new ResponseClass<string>()
+                            {
+                                Data = user.UserName,
+                                Message = "Teacher Name is send successfully...",
+                                Status = true
+                            };
+                            return response3;
+                        }
+                        else
+                        {
+                            ResponseClass<string> response2 = new ResponseClass<string>()
+                            {
+                                Message = "Teacher Name is not Found...",
+                            };
+                            return response2;
+                        }
+                    }
+                    ResponseClass<string> response = new ResponseClass<string>()
+                    {
+                        Message = "Teacher is not Found...",
+                    };
+                    return response;
+
+                }
+                else
+                {
+                    ResponseClass<string> response = new ResponseClass<string>()
+                    {
+                        Message = "Course is not Found...",
+                    };
+                    return response;
+                }
+            }
+            else
+            {
+                ResponseClass<string> response = new ResponseClass<string>()
+                {
+                    Message = "Exam is not Found...",
+                };
+                return response;
+            }
+        }
+
+        public async Task<ResponseClass<double>> GetTotalMark(int examId)
+        {
+            var exam = await _dbContext.Exams.FindAsync(examId);
+            if (exam != null)
+            {
+                var questions = await _dbContext.Questions.Where(q => q.ExamId == examId).ToListAsync();
+                if (questions != null)
+                {
+                    double totalMark = 0;
+                    foreach (var question in questions)
+                    {
+                        totalMark += question.Weight;
+                    }
+                    ResponseClass<double> response = new ResponseClass<double>()
+                    {
+                        Data = totalMark,
+                        Message = "Total Mark is send successfully...",
+                        Status = true
+                    };
+                    return response;
+                }
+                else
+                {
+                    ResponseClass<double> response = new ResponseClass<double>()
+                    {
+                        Message = "No Questions are Found...",
+                    };
+                    return response;
+                }
+            }
+            else
+            {
+                ResponseClass<double> response = new ResponseClass<double>()
+                {
+                    Message = "Exam is not Found...",
+                };
+                return response;
+            }
+        }
 
     }
 }

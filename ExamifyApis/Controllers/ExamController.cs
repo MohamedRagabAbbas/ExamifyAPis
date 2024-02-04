@@ -55,6 +55,22 @@ namespace ExamifyApis.Controllers
             return response;
         }
 
+        [HttpGet("GetTeacherName/{id}")]
+        public async Task<ResponseClass<string>> GetTeacherName(int id)
+        {
+            var response = await _examServices.GetTeacherName(id);
+            return response;
+        }
+
+        [HttpGet]
+        [Route("GetTotalMark/{id}")]
+        public async Task<ResponseClass<double>> GetTotalMark(int id)
+        {
+            var response = await _examServices.GetTotalMark(id);
+            return response;
+        }
+
+
 
 
     }

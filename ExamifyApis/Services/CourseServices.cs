@@ -68,7 +68,7 @@ namespace ExamifyApis.Services
         }
         public async Task<ResponseClass<Course>> GetCourse(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
+            var course = await _context.Courses.Include(x=>x.Teacher).FirstOrDefaultAsync(x=>x.Id==id);
             if(course!=null)
             {
                 ResponseClass<Course> response = new ResponseClass<Course>()

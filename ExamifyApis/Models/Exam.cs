@@ -17,5 +17,6 @@
 
         public List<StudentAttempts>? StudentAttempts { get; set; }
         public int AttemptsNumber { get; set; } = 1;
+        public int Duration { get; set; } = 60;
     }
 }
